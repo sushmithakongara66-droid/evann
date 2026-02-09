@@ -57,7 +57,6 @@ class TestUserRegistration(unittest.TestCase):
     
     def tearDown(self):
         """Clean up test database."""
-        import os
         import app as app_module
         if os.path.exists(self.test_db):
             os.remove(self.test_db)

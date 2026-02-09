@@ -6,9 +6,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import sqlite3
 import re
 import os
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
+
+# Warn if using default secret key
+if app.secret_key == 'dev-secret-key-change-in-production':
+    logger.warning('Using default secret key. Set SECRET_KEY environment variable for production!')
+
 DATABASE = 'users.db'
 
 
@@ -116,6 +126,7 @@ def register():
             flash('Registration successful! You can now log in.', 'success')
             return redirect(url_for('index'))
         except Exception as e:
+            logger.error(f'Registration error: {str(e)}', exc_info=True)
             flash('An error occurred during registration', 'error')
             return render_template('register.html')
         finally:
@@ -190,6 +201,7 @@ def api_register():
         }), 201
     except Exception as e:
         conn.close()
+        logger.error(f'API registration error: {str(e)}', exc_info=True)
         return jsonify({'error': 'An error occurred during registration'}), 500
 
 
