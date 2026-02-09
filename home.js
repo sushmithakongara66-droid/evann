@@ -2,11 +2,11 @@
 const isLoggedIn = sessionStorage.getItem('isLoggedIn');
 const username = sessionStorage.getItem('username');
 
-if (!isLoggedIn || isLoggedIn !== 'true') {
-    // Redirect to login page if not logged in
+if (!isLoggedIn || isLoggedIn !== 'true' || !username) {
+    // Redirect to login page if not logged in or username is missing
     window.location.href = 'index.html';
 } else {
-    // Display welcome message with username
+    // Display welcome message with username (textContent prevents XSS)
     document.getElementById('welcomeUser').textContent = username;
 }
 

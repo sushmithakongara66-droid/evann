@@ -11,6 +11,7 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
     
     // Simple validation - in a real application, this would be done securely on the server
     // For demonstration purposes, we're using basic client-side validation
+    // NOTE: This demo accepts ANY username with a password of 6+ characters
     if (username && password) {
         // Demo credentials (in production, this would be handled by backend)
         if (password.length >= 6) {
