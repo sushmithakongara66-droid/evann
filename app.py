@@ -207,4 +207,6 @@ def api_register():
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True)
+    # Only enable debug mode if explicitly set in environment
+    debug_mode = os.environ.get('FLASK_DEBUG', 'False').lower() == 'true'
+    app.run(debug=debug_mode)
